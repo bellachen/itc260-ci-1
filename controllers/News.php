@@ -54,10 +54,17 @@ class News extends CI_Controller {
             }
             else
             {
-                $this->news_model->set_news();
-                //$this->load->view('templates/header', $data);
-                $this->load->view('news/success', $data);
-                //$this->load->view('templates/footer', $data);
+                $slug = $this->news_model->set_news();
+                
+                if($slug !== false)
+                {
+                    feedback('News item successfully created','info');
+                    redirect('/news/view/' . $slug);
+                }else{
+                    feedback('News item not created','error');
+                    redirect('/news/create/');
+                }
+                
             }
         }
     
